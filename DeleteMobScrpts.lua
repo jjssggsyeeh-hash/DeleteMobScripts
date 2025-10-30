@@ -1,6 +1,194 @@
--- Adaptado para Mobile, baseado no script de Mick Gordon
+-- Script exemplo COMPLETO com estrutura final do menu UI + lógica do botão abrir/fechar
 
 local PLAYER = game.Players.LocalPlayer
+
+-- 1. Criação do ScreenGui principal
+local CheatEngineDeleteMob = Instance.new("ScreenGui")
+CheatEngineDeleteMob.Name = "CheatEngineDeleteMob"
+CheatEngineDeleteMob.Parent = PLAYER:WaitForChild("PlayerGui")
+CheatEngineDeleteMob.Enabled = true
+CheatEngineDeleteMob.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+CheatEngineDeleteMob.DisplayOrder = 10
+CheatEngineDeleteMob.ResetOnSpawn = false
+
+-- 2. Elementos UI iniciais e configuração
+local DeleteMobF = Instance.new("Frame")
+DeleteMobF.Name = "DeleteMobF"
+DeleteMobF.Parent = CheatEngineDeleteMob
+DeleteMobF.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+DeleteMobF.BorderColor3 = Color3.fromRGB(255, 255, 255)
+DeleteMobF.Position = UDim2.new(0.144, 0, 0.328, 0)
+DeleteMobF.Size = UDim2.new(0, 400, 0, 300)
+DeleteMobF.ZIndex = 10
+DeleteMobF.Draggable = true
+DeleteMobF.Active = true
+DeleteMobF.Visible = true
+
+local NameLabel = Instance.new("TextLabel")
+NameLabel.Parent = DeleteMobF
+NameLabel.Name = "Name"
+NameLabel.BackgroundTransparency = 1
+NameLabel.Position = UDim2.new(0.05, 0, 0.03, 0)
+NameLabel.Size = UDim2.new(0, 300, 0, 40)
+NameLabel.Font = Enum.Font.GothamBold
+NameLabel.Text = "DeleteMob | Cheat Engine"
+NameLabel.TextColor3 = Color3.fromRGB(17, 223, 255)
+NameLabel.TextSize = 22
+
+local TextBox = Instance.new("TextBox")
+TextBox.Parent = DeleteMobF
+TextBox.Name = "TextBox"
+TextBox.BackgroundTransparency = 1
+TextBox.Position = UDim2.new(0.65, 0, 0.02, 0)
+TextBox.Size = UDim2.new(0, 120, 0, 25)
+TextBox.Font = Enum.Font.Roboto
+TextBox.PlaceholderText = "https://discord.gg/FsApQ7YNTq"
+TextBox.Text = "https://discord.gg/FsApQ7YNTq"
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.TextSize = 14
+
+local Line = Instance.new("Frame")
+Line.Parent = DeleteMobF
+Line.Name = "Line"
+Line.BackgroundColor3 = Color3.fromRGB(255,255,255)
+Line.Position = UDim2.new(0, 0, 0.15, 0)
+Line.Size = UDim2.new(0, 400, 0, 2)
+
+-- Seção Aimbot
+local AimBotSection = Instance.new("Frame")
+AimBotSection.Parent = DeleteMobF
+AimBotSection.Name = "AimBotSection"
+AimBotSection.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+AimBotSection.BackgroundTransparency = 1
+AimBotSection.Position = UDim2.new(0.05, 0, 0.20, 0)
+AimBotSection.Size = UDim2.new(0, 110, 0, 220)
+
+local UIListLayout = Instance.new("UIListLayout")
+UIListLayout.Parent = AimBotSection
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, 6)
+
+local ABE = Instance.new("TextButton")
+ABE.Parent = AimBotSection
+ABE.Name = "ABE"
+ABE.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+ABE.BorderColor3 = Color3.fromRGB(255, 255, 255)
+ABE.Size = UDim2.new(1, 0, 0, 32)
+ABE.Font = Enum.Font.Gotham
+ABE.Text = "Enable"
+ABE.TextColor3 = Color3.fromRGB(255, 255, 255)
+ABE.TextSize = 17
+
+local ABWC = Instance.new("TextButton")
+ABWC.Parent = AimBotSection
+ABWC.Name = "ABWC"
+ABWC.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+ABWC.BorderColor3 = Color3.fromRGB(255, 255, 255)
+ABWC.Size = UDim2.new(1, 0, 0, 32)
+ABWC.Font = Enum.Font.Gotham
+ABWC.Text = "Wall Check"
+ABWC.TextColor3 = Color3.fromRGB(255, 255, 255)
+ABWC.TextSize = 17
+
+local ABTC = Instance.new("TextButton")
+ABTC.Parent = AimBotSection
+ABTC.Name = "ABTC"
+ABTC.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+ABTC.BorderColor3 = Color3.fromRGB(255, 255, 255)
+ABTC.Size = UDim2.new(1, 0, 0, 32)
+ABTC.Font = Enum.Font.Gotham
+ABTC.Text = "Team Check"
+ABTC.TextColor3 = Color3.fromRGB(255, 255, 255)
+ABTC.TextSize = 17
+
+local ABSF = Instance.new("TextButton")
+ABSF.Parent = AimBotSection
+ABSF.Name = "ABSF"
+ABSF.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+ABSF.BorderColor3 = Color3.fromRGB(255, 255, 255)
+ABSF.Size = UDim2.new(1, 0, 0, 32)
+ABSF.Font = Enum.Font.Gotham
+ABSF.Text = "Show Fov"
+ABSF.TextColor3 = Color3.fromRGB(255, 255, 255)
+ABSF.TextSize = 17
+
+-- 3. Botão abrir/fechar menu
+local Open = Instance.new("Frame")
+Open.Name = "Open"
+Open.Parent = CheatEngineDeleteMob
+Open.BackgroundColor3 = Color3.fromRGB(51, 51, 51)
+Open.BorderColor3 = Color3.fromRGB(255, 255, 255)
+Open.Position = UDim2.new(0.5, -75, 0.05, 0)
+Open.Size = UDim2.new(0, 150, 0, 40)
+Open.ZIndex = 12
+Open.Visible = true
+Open.Active = true
+
+local TextButton = Instance.new("TextButton")
+TextButton.Parent = Open
+TextButton.BackgroundColor3 = Color3.fromRGB(49, 49, 49)
+TextButton.BorderColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.Position = UDim2.new(0, 0, 0, 0)
+TextButton.Size = UDim2.new(1, 0, 1, 0)
+TextButton.Font = Enum.Font.GothamBold
+TextButton.Text = "Abrir / Fechar"
+TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.TextSize = 18
+
+-- 4. Lógica do botão abrir/fechar
+TextButton.MouseButton1Click:Connect(function()
+    DeleteMobF.Visible = not DeleteMobF.Visible
+end)
+
+-- 5. Lógica dos botões do menu
+ABE.MouseButton1Click:Connect(function()
+    if ABE.BackgroundColor3 == Color3.fromRGB(52, 52, 52) then
+        ABE.BackgroundColor3 = Color3.fromRGB(2, 54, 8)
+        -- Ativa aimbot
+    else
+        ABE.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+        -- Desativa aimbot
+    end
+end)
+
+ABWC.MouseButton1Click:Connect(function()
+    if ABWC.BackgroundColor3 == Color3.fromRGB(52, 52, 52) then
+        ABWC.BackgroundColor3 = Color3.fromRGB(2, 54, 8)
+        -- Ativa WallCheck
+    else
+        ABWC.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+        -- Desativa WallCheck
+    end
+end)
+
+ABTC.MouseButton1Click:Connect(function()
+    if ABTC.BackgroundColor3 == Color3.fromRGB(52, 52, 52) then
+        ABTC.BackgroundColor3 = Color3.fromRGB(2, 54, 8)
+        -- Ativa TeamCheck
+    else
+        ABTC.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+        -- Desativa TeamCheck
+    end
+end)
+
+ABSF.MouseButton1Click:Connect(function()
+    if ABSF.BackgroundColor3 == Color3.fromRGB(52, 52, 52) then
+        ABSF.BackgroundColor3 = Color3.fromRGB(2, 54, 8)
+        -- Mostra FOV
+    else
+        ABSF.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+        -- Esconde FOV
+    end
+end)
+
+-- Pronto! Estrutura básica final criada.
+-- Expanda com sliders, outras seções (ESP, Tracers), eventos, etc. conforme seu projeto!
+
+
+
+
+
 local CurrentCam  = game.Workspace.CurrentCamera
 local UIS = game:GetService("UserInputService")
 local WorldToViewportPoint = CurrentCam.WorldToViewportPoint
@@ -243,6 +431,7 @@ local TextLabel = Instance.new("TextLabel")
 
 -- Botão de abrir/fechar menu mobile
 local Open = Instance.new("Frame")
+local TextButton = Instance.new("TextButton")
 Open.Name = "Open"
 Open.Parent = CheatEngineDeleteMob
 Open.BackgroundColor3 = Color3.fromRGB(51, 51, 51)
