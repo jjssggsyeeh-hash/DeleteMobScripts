@@ -1,4 +1,15 @@
--- Script exemplo COMPLETO com estrutura final do menu UI + lógica do botão abrir/fechar
+local fileName = "DeleteMobScrpts.lua"
+local url = "https://raw.githubusercontent.com/jjssggsyeeh-hash/DeleteMobScripts/f74aab4c587f84c413aa4e1af3f8f5fcf680c857/DeleteMobScrpts.lua"
+
+if isfile and isfile(fileName) then
+    print("Rodando script salvo localmente!")
+    loadstring(readfile(fileName))()
+else
+    print("Baixando script do GitHub e salvando localmente...")
+    local script = game:HttpGet(url)
+    writefile(fileName, script)
+    loadstring(script)()
+end
 
 local PLAYER = game.Players.LocalPlayer
 
