@@ -182,12 +182,6 @@ ABSF.MouseButton1Click:Connect(function()
     end
 end)
 
--- Pronto! Estrutura básica final criada.
--- Expanda com sliders, outras seções (ESP, Tracers), eventos, etc. conforme seu projeto!
-
-
-
-
 
 local CurrentCam  = game.Workspace.CurrentCamera
 local UIS = game:GetService("UserInputService")
